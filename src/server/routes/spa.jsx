@@ -35,6 +35,7 @@ export const spaRoute = async (fastify) => {
       const style = sheet.getStyleTags();
 
       const header = `
+      <!DOCTYPE html>
       <html lang="ja">
         <head>
           <meta charset="UTF-8" />
