@@ -1,7 +1,6 @@
 import moment from "moment-timezone";
 import { Between, LessThanOrEqual, MoreThanOrEqual } from "typeorm";
 
-import { assets } from "../../client/foundation/utils/UrlUtils.js";
 import { BettingTicket, Race, User } from "../../model/index.js";
 import { createConnection } from "../typeorm/connection.js";
 import { initialize } from "../typeorm/initialize.js";
@@ -10,8 +9,10 @@ import { initialize } from "../typeorm/initialize.js";
  * @type {import('fastify').FastifyPluginCallback}
  */
 export const apiRoute = async (fastify) => {
+  const conn = await createConnection();
+
   fastify.get("/users/me", async (req, res) => {
-    const repo = (await createConnection()).getRepository(User);
+    const repo = conn.getRepository(User);
 
     if (req.user != null) {
       res.send(req.user);
@@ -31,7 +32,7 @@ export const apiRoute = async (fastify) => {
       throw fastify.httpErrors.badRequest();
     }
 
-    const repo = (await createConnection()).getRepository(User);
+    const repo = conn.getRepository(User);
 
     req.user.balance += amount;
     await repo.save(req.user);
@@ -53,7 +54,7 @@ export const apiRoute = async (fastify) => {
     }
 
     // TODO: キャッシュしても良いけどめんどくさそう。後回し
-    const repo = (await createConnection()).getRepository(Race);
+    const repo = conn.getRepository(Race);
 
     const where = {};
     if (since != null && until != null) {
@@ -81,7 +82,7 @@ export const apiRoute = async (fastify) => {
   });
 
   fastify.get("/races/:raceId", async (req, res) => {
-    const repo = (await createConnection()).getRepository(Race);
+    const repo = conn.getRepository(Race);
 
     // TODO: updatedAtがあればキャッシュしたかった…15sぐらいでキャッシュしても良いかもね
     const race = await repo.findOne(req.params.raceId, {
@@ -100,7 +101,7 @@ export const apiRoute = async (fastify) => {
       throw fastify.httpErrors.unauthorized();
     }
 
-    const repo = (await createConnection()).getRepository(BettingTicket);
+    const repo = conn.getRepository(BettingTicket);
     // TODO: createdAtをみてキャッシュさせる
     const bettingTickets = await repo.find({
       where: {
@@ -138,7 +139,7 @@ export const apiRoute = async (fastify) => {
       throw fastify.httpErrors.badRequest();
     }
 
-    const bettingTicketRepo = (await createConnection()).getRepository(
+    const bettingTicketRepo = conn.getRepository(
       BettingTicket,
     );
     const bettingTicket = await bettingTicketRepo.save(
@@ -154,7 +155,7 @@ export const apiRoute = async (fastify) => {
       }),
     );
 
-    const userRepo = (await createConnection()).getRepository(User);
+    const userRepo = conn.getRepository(User);
     req.user.balance -= 100;
     await userRepo.save(req.user);
 
