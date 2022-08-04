@@ -11194,6 +11194,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"use-intersection@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "use-intersection@npm:0.2.1"
+  dependencies:
+    shallowequal: ^1.1.0
+  peerDependencies:
+    react: ^16.8.0
+    react-dom: ^16.8.0
+  checksum: 7a70e66af58e1edb1a11545584bcc1d5a65274643fd36631e04f79809d1accbc865e668d05c085275867c7ef2e1a67aca2af041e178946c5f5ff8ad777c5e3ad
+  languageName: node
+  linkType: hard
+
 "util-deprecate@npm:^1.0.1, util-deprecate@npm:^1.0.2, util-deprecate@npm:~1.0.1":
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
@@ -11399,6 +11411,7 @@ __metadata:
     terser-webpack-plugin: ^5.3.3
     typeorm: ^0.2.44
     typescript: ^4.6.2
+    use-intersection: ^0.2.1
     uuid: ^8.3.2
     wait-on: ^6.0.0
     webpack: ^5.65.0

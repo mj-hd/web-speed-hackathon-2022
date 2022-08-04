@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import React, { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
-import zenginCode from "zengin-code";
+import React, { forwardRef, useCallback, useEffect, useState } from "react";
+import { useIntersection } from "use-intersection";
 
 import { Dialog } from "../../../../components/layouts/Dialog";
 import { Spacer } from "../../../../components/layouts/Spacer";
@@ -68,17 +68,25 @@ export const ChargeDialog = forwardRef(({ onComplete }, ref) => {
   );
 
   const [bankList, setBankList] = useState([]);
+  const [zenginCode, setZenginCode] = useState(null);
 
-  // NOTE: デカすぎDOMを避けるために遅延させる
+  const opened = useIntersection(ref);
+
   useEffect(() => {
-    setBankList(Object.entries(zenginCode).map(([code, { name }]) => ({
-      code,
-      name,
-    })));
-  }, []);
+    if (!opened) return;
 
-  // TODO: 全銀コード、API化したい…
-  const bank = zenginCode[bankCode];
+    (async () => {
+      const zenginCode = await import(/* webpackChunkName: "zengin" */ "zengin-code");
+
+      setZenginCode(zenginCode);
+      setBankList(Object.entries(zenginCode).map(([code, { name }]) => ({
+        code,
+        name,
+      })));
+    })();
+  }, [opened]);
+
+  const bank = zenginCode != null ? zenginCode[bankCode] : null;
   const branch = bank?.branches[branchCode];
 
   return (
