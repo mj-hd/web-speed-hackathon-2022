@@ -1,4 +1,5 @@
-import _ from "lodash";
+import take from "lodash.take";
+import sortBy from "lodash.sortby";
 import React, { useMemo } from "react";
 import styled from "styled-components";
 
@@ -67,8 +68,8 @@ const RankNo = styled.div`
 /** @type {React.VFC<Props>} */
 export const OddsRankingList = ({ isRaceClosed, odds, onClickOdds }) => {
   // TODO: updatedAtがないのでメモ化できない。API側で順序保証ないと詰み…
-  const sortedOdds = _.take(
-    _.sortBy(odds, (item) => item.odds),
+  const sortedOdds = take(
+    sortBy(odds, (item) => item.odds),
     50);
 
   return (

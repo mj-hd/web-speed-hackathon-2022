@@ -7,6 +7,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const nodeExternals = require("webpack-node-externals");
 
 function abs(...args) {
@@ -101,6 +102,9 @@ module.exports = [
         publicPath: '/',
         scriptLoading: 'defer',
         template: path.join(SRC_ROOT, 'index.html'),
+      }),
+      new MomentLocalesPlugin({
+        localesToKeep: ['ja'],
       }),
       new CopyPlugin({
         patterns: [{ from: PUBLIC_ROOT, to: DIST_PUBLIC }],

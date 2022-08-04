@@ -1455,13 +1455,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-free@npm:^5.15.4":
-  version: 5.15.4
-  resolution: "@fortawesome/fontawesome-free@npm:5.15.4"
-  checksum: 32281c3df4075290d9a96dfc22f72fadb3da7055d4117e48d34046b8c98032a55fa260ae351b0af5d6f6fb57a2f5d79a4abe52af456da35195f7cb7dda27b4a2
-  languageName: node
-  linkType: hard
-
 "@gar/promisify@npm:^1.0.1, @gar/promisify@npm:^1.1.3":
   version: 1.1.3
   resolution: "@gar/promisify@npm:1.1.3"
@@ -7020,10 +7013,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.difference@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.difference@npm:4.5.0"
+  checksum: ecee276aa578f300e79350805a14a51be8d1f12b3c1389a19996d8ab516f814211a5f65c68331571ecdad96522b863ccc484b55504ce8c9947212a29f8857d5a
+  languageName: node
+  linkType: hard
+
 "lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: ad580b4bdbb7ca1f7abf7e1bce63a9a0b98e370cf40194b03380a46b4ed799c9573029599caebc1b14e3f24b111aef72b96674a56cfa105e0f5ac70546cdc005
+  languageName: node
+  linkType: hard
+
+"lodash.slice@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "lodash.slice@npm:4.2.0"
+  checksum: bccd6c17723bc5dc389bf638eef88b3c20ac633eeb61ed40d9f5f09c95b964691e939bd754fc6b613f2bd9a11d61694a751d463b7a5b5f6dd65b1dea8ef0c4e0
+  languageName: node
+  linkType: hard
+
+"lodash.sortby@npm:^4.7.0":
+  version: 4.7.0
+  resolution: "lodash.sortby@npm:4.7.0"
+  checksum: db170c9396d29d11fe9a9f25668c4993e0c1331bcb941ddbd48fb76f492e732add7f2a47cfdf8e9d740fa59ac41bbfaf931d268bc72aab3ab49e9f89354d718c
+  languageName: node
+  linkType: hard
+
+"lodash.take@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "lodash.take@npm:4.1.1"
+  checksum: 5786572bb5865ba9f82e1a80f5a2ee861b38570fe7440af33cba4707dc87138b2dec836936fe87534f3da89f6899dd6d0f7287c1c4c3f0117cbfdb1aa6981a63
   languageName: node
   linkType: hard
 
@@ -7495,6 +7516,18 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: a96865108c6c3b1b8e1d5e9f11843de1e077e57737602de1b82030815f311be11f96f09cce59bd5b903d0b29834733e5313f9301e3ed6d6f6fba2eae0df4298f
+  languageName: node
+  linkType: hard
+
+"moment-locales-webpack-plugin@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "moment-locales-webpack-plugin@npm:1.2.0"
+  dependencies:
+    lodash.difference: ^4.5.0
+  peerDependencies:
+    moment: ^2.8.0
+    webpack: ^1 || ^2 || ^3 || ^4 || ^5
+  checksum: bb5daebfc2f2bd0c003b9d576893531edc6ac3c884c77fc4c3a7c8d228340c9a26a5c7676c8e4505922eebb1309f2defbcf619a1706d7d7e579039690df2487b
   languageName: node
   linkType: hard
 
@@ -11307,7 +11340,6 @@ __metadata:
     "@babel/preset-env": ^7.16.7
     "@babel/preset-react": ^7.16.7
     "@babel/runtime": ^7.17.2
-    "@fortawesome/fontawesome-free": ^5.15.4
     "@stylelint/postcss-css-in-js": ^0.37.2
     "@types/lodash": ^4.14.178
     "@types/react": ^17.0.38
@@ -11339,7 +11371,11 @@ __metadata:
     html-webpack-plugin: ^5.5.0
     http-proxy-agent: ^5.0.0
     http-simple-proxy: ^1.0.5
-    lodash: ^4.17.21
+    lodash.difference: ^4.5.0
+    lodash.slice: ^4.2.0
+    lodash.sortby: ^4.7.0
+    lodash.take: ^4.1.1
+    moment-locales-webpack-plugin: ^1.2.0
     moment-timezone: ^0.5.34
     nodemon: ^2.0.15
     npm-run-all: ^4.1.5
