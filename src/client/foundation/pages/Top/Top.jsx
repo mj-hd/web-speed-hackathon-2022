@@ -13,6 +13,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { Color, Radius, Space } from "../../styles/variables";
 import { isSameDay } from "../../utils/DateUtils";
 import { authorizedJsonFetcher, jsonFetcher } from "../../utils/HttpUtils";
+import { assets } from "../../utils/UrlUtils";
 
 import { ChargeDialog } from "./internal/ChargeDialog";
 import { HeroImage } from "./internal/HeroImage";
@@ -83,18 +84,11 @@ function useTodayRacesWithAnimation(races) {
  */
 function useHeroImage(todayRaces) {
   const firstRaceId = todayRaces[0]?.id;
-  const url =
-    firstRaceId !== undefined
-      ? `/api/hero?firstRaceId=${firstRaceId}`
-      : "/api/hero";
-  const { data } = useFetch(url, jsonFetcher);
-
-  if (firstRaceId === undefined || data === null) {
+  if (firstRaceId === undefined) {
     return null;
   }
 
-  const imageUrl = `${data.url}?${data.hash}`;
-  return imageUrl;
+  return assets("images/hero.resized.webp");
 }
 
 /** @type {React.VFC} */
@@ -136,13 +130,13 @@ export const Top = () => {
   const todayRaces =
     raceData != null
       ? [...raceData.races]
-          .sort(
-            (/** @type {Model.Race} */ a, /** @type {Model.Race} */ b) =>
-              moment(a.startAt) - moment(b.startAt),
-          )
-          .filter((/** @type {Model.Race} */ race) =>
-            isSameDay(race.startAt, date),
-          )
+        .sort(
+          (/** @type {Model.Race} */ a, /** @type {Model.Race} */ b) =>
+            moment(a.startAt) - moment(b.startAt),
+        )
+        .filter((/** @type {Model.Race} */ race) =>
+          isSameDay(race.startAt, date),
+        )
       : [];
   const todayRacesToShow = useTodayRacesWithAnimation(todayRaces);
   const heroImageUrl = useHeroImage(todayRaces);
