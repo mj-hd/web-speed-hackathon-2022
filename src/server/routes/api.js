@@ -41,6 +41,7 @@ export const apiRoute = async (fastify) => {
 
   fastify.get("/hero", async (_req, res) => {
     const url = assets("/images/hero.jpg");
+    // TODO: 悪っぽいw
     const hash = Math.random().toFixed(10).substring(2);
 
     res.send({ hash, url });
@@ -59,6 +60,7 @@ export const apiRoute = async (fastify) => {
       throw fastify.httpErrors.badRequest();
     }
 
+    // TODO: キャッシュしても良いけどめんどくさそう。後回し
     const repo = (await createConnection()).getRepository(Race);
 
     const where = {};
@@ -89,6 +91,7 @@ export const apiRoute = async (fastify) => {
   fastify.get("/races/:raceId", async (req, res) => {
     const repo = (await createConnection()).getRepository(Race);
 
+    // TODO: updatedAtがあればキャッシュしたかった…15sぐらいでキャッシュしても良いかもね
     const race = await repo.findOne(req.params.raceId, {
       relations: ["entries", "entries.player", "trifectaOdds"],
     });
@@ -106,6 +109,7 @@ export const apiRoute = async (fastify) => {
     }
 
     const repo = (await createConnection()).getRepository(BettingTicket);
+    // TODO: createdAtをみてキャッシュさせる
     const bettingTickets = await repo.find({
       where: {
         race: {

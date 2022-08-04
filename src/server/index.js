@@ -15,11 +15,11 @@ const server = fastify({
   logger: IS_PRODUCTION
     ? false
     : {
-        prettyPrint: {
-          ignore: "pid,hostname",
-          translateTime: "SYS:HH:MM:ss",
-        },
+      prettyPrint: {
+        ignore: "pid,hostname",
+        translateTime: "SYS:HH:MM:ss",
       },
+    },
 });
 server.register(fastifySensible);
 
@@ -38,6 +38,7 @@ server.addHook("onRequest", async (req, res) => {
 });
 
 server.addHook("onRequest", async (req, res) => {
+  // TODO: 適切なCache-Control設定する
   res.header("Cache-Control", "no-cache, no-store, no-transform");
   res.header("Connection", "close");
 });

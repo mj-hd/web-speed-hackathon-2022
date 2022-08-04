@@ -6,6 +6,7 @@ import fastifyStatic from "fastify-static";
  * @type {import('fastify').FastifyPluginCallback}
  */
 export const spaRoute = async (fastify) => {
+  // TODO: 拡張子ごとに分けてcache-control
   fastify.register(fastifyStatic, {
     root: join(__dirname, "public"),
     wildcard: false,
