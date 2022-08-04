@@ -79,6 +79,8 @@ const mapKey = (second, third) => `${second}.${third}`;
  * @property {(odds: Model.OddsItem) => void} onClickOdds
  */
 
+// TODO: この辺りもupdatedAtがないとメモ化できない…
+// updatedAtがあればOddsはMapで扱った方がよさそう
 /** @type {React.VFC<Props>} */
 export const OddsTable = ({ entries, isRaceClosed, odds, onClickOdds }) => {
   const [firstKey, setFirstKey] = useState(1);

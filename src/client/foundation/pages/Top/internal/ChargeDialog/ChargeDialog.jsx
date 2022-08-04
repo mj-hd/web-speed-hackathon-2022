@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { forwardRef, useCallback, useState } from "react";
+import React, { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
 import zenginCode from "zengin-code";
 
 import { Dialog } from "../../../../components/layouts/Dialog";
@@ -67,10 +67,17 @@ export const ChargeDialog = forwardRef(({ onComplete }, ref) => {
     [charge, bankCode, branchCode, accountNo, amount, onComplete, clearForm],
   );
 
-  const bankList = Object.entries(zenginCode).map(([code, { name }]) => ({
-    code,
-    name,
-  }));
+  const [bankList, setBankList] = useState([]);
+
+  // NOTE: デカすぎDOMを避けるために遅延させる
+  useEffect(() => {
+    setBankList(Object.entries(zenginCode).map(([code, { name }]) => ({
+      code,
+      name,
+    })));
+  }, []);
+
+  // TODO: 全銀コード、API化したい…
   const bank = zenginCode[bankCode];
   const branch = bank?.branches[branchCode];
 

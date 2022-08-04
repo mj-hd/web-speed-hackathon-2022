@@ -14,6 +14,7 @@ export const isSameDay = (dateLeft, dateRight) => {
  * @returns {string}
  */
 export const formatTime = (ts) => {
+  // TODO: LRUでキャッシュできるかも
   return moment(ts).format("H:mm");
 };
 

@@ -1,5 +1,5 @@
 import moment from "moment-timezone";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -57,11 +57,12 @@ export const Odds = () => {
     [],
   );
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const isRaceClosed = useMemo(() => data != null ? moment(data.closeAt).isBefore(new Date()) : null, [data?.closeAt]);
+
   if (data == null) {
     return <Container>Loading...</Container>;
   }
-
-  const isRaceClosed = moment(data.closeAt).isBefore(new Date());
 
   return (
     <Container>
