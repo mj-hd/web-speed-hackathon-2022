@@ -9,5 +9,5 @@ import { baseName } from "../../../utils/UrlUtils";
 
 /** @type {React.VFC<Props>} */
 export const BigImage = ({ src, ...attrs }) => {
-  return <img {...attrs} height="225" src={`${baseName(src)}.big.png`} width="400" />;
+  return <img {...attrs} height="225" src={`${baseName(src)}.big.webp`} width="400" />;
 }
