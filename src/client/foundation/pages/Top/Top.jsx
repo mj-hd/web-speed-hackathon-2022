@@ -175,3 +175,5 @@ export const Top = () => {
     </Container>
   );
 };
+
+export default Top;

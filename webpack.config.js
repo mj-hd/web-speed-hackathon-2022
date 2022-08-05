@@ -2,12 +2,13 @@
 const crypto = require('crypto');
 const path = require("path");
 
+const LoadablePlugin = require('@loadable/webpack-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const nodeExternals = require("webpack-node-externals");
 
 function abs(...args) {
@@ -45,7 +46,7 @@ module.exports = [
           use: {
             loader: "babel-loader",
             options: {
-              plugins: ["@babel/plugin-syntax-dynamic-import"],
+              plugins: ["@babel/plugin-syntax-dynamic-import", "@loadable/babel-plugin"],
               presets: [
                 "@babel/preset-env",
                 "@babel/preset-react",
@@ -109,6 +110,8 @@ module.exports = [
       new CopyPlugin({
         patterns: [{ from: PUBLIC_ROOT, to: DIST_PUBLIC }],
       }),
+      new LoadablePlugin({
+      }),
       IS_RELEASE && new BrotliPlugin({
         asset: '[path].br',
         minRatio: 0.8,
@@ -134,14 +137,9 @@ module.exports = [
           use: {
             loader: "babel-loader",
             options: {
+              plugins: ["babel-plugin-styled-components", "@babel/plugin-syntax-dynamic-import", "@loadable/babel-plugin"],
               presets: [
-                [
-                  "@babel/preset-env",
-                  {
-                    modules: "cjs",
-                    spec: true,
-                  },
-                ],
+                "@babel/preset-env",
                 "@babel/preset-react",
               ]
             },
