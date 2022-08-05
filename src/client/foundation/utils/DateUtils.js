@@ -1,4 +1,5 @@
-import moment from "moment-timezone";
+import moment from "moment";
+
 import { cacheGet, cacheSet } from "../../../cache";
 /**
  * @param {string} dateLeft

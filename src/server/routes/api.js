@@ -1,4 +1,5 @@
-import moment from "moment-timezone";
+import moment from "moment";
+import zenginCode from "zengin-code";
 import { Between, LessThanOrEqual, MoreThanOrEqual } from "typeorm";
 
 import { BettingTicket, Race, User } from "../../model/index.js";
@@ -14,6 +15,7 @@ export const apiRoute = async (fastify) => {
   fastify.get("/users/me", async (req, res) => {
     const repo = conn.getRepository(User);
 
+    res.header("Cache-Control", "no-cache, no-store");
     if (req.user != null) {
       res.send(req.user);
     } else {
@@ -37,6 +39,7 @@ export const apiRoute = async (fastify) => {
     req.user.balance += amount;
     await repo.save(req.user);
 
+    res.header("Cache-Control", "no-cache, no-store");
     res.status(204).send();
   });
 
@@ -53,7 +56,6 @@ export const apiRoute = async (fastify) => {
       throw fastify.httpErrors.badRequest();
     }
 
-    // TODO: キャッシュしても良いけどめんどくさそう。後回し
     const repo = conn.getRepository(Race);
 
     const where = {};
@@ -81,6 +83,7 @@ export const apiRoute = async (fastify) => {
       where
     });
 
+    res.header("Cache-Control", "no-cache, no-store");
     res.send({ races });
   });
 
@@ -93,6 +96,7 @@ export const apiRoute = async (fastify) => {
       throw fastify.httpErrors.notFound();
     }
 
+    res.header("Cache-Control", "no-cache, no-store");
     res.send(race);
   });
 
@@ -107,6 +111,7 @@ export const apiRoute = async (fastify) => {
       throw fastify.httpErrors.notFound();
     }
 
+    res.header("Cache-Control", "no-cache, no-store");
     res.send(race);
   });
 
@@ -121,6 +126,7 @@ export const apiRoute = async (fastify) => {
       throw fastify.httpErrors.notFound();
     }
 
+    res.header("Cache-Control", "no-cache, no-store");
     res.send(race);
   });
 
@@ -142,9 +148,15 @@ export const apiRoute = async (fastify) => {
       },
     });
 
+    res.header("Cache-Control", "no-cache, no-store");
     res.send({
       bettingTickets,
     });
+  });
+
+  fastify.get("/zengin", async (_, res) => {
+    res.header('cache-control', 'max-age=604800');
+    res.send(zenginCode);
   });
 
   fastify.post("/races/:raceId/betting-tickets", async (req, res) => {
@@ -187,6 +199,7 @@ export const apiRoute = async (fastify) => {
     req.user.balance -= 100;
     await userRepo.save(req.user);
 
+    res.header("Cache-Control", "no-cache, no-store");
     res.send(bettingTicket);
   });
 

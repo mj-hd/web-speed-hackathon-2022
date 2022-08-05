@@ -1,6 +1,6 @@
 import difference from "lodash.difference";
 import slice from "lodash.slice";
-import moment from "moment-timezone";
+import moment from "moment";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";

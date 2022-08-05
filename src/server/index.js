@@ -37,12 +37,6 @@ server.addHook("onRequest", async (req, res) => {
   }
 });
 
-server.addHook("onRequest", async (req, res) => {
-  // TODO: 適切なCache-Control設定する
-  res.header("Cache-Control", "no-cache, no-store, no-transform");
-  res.header("Connection", "close");
-});
-
 server.register(apiRoute, { prefix: "/api" });
 server.register(spaRoute);
 

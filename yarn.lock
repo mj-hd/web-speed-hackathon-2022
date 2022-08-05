@@ -3801,13 +3801,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.21.1":
-  version: 3.24.1
-  resolution: "core-js@npm:3.24.1"
-  checksum: 6fb5bf0fd9e9f3e69d95616dd03332fea6758a715d2628c108b5faf17b48b0f580e90c4febb0a523c4665b0991a810de16289f86187fe79d70cc722dbd3edf0e
-  languageName: node
-  linkType: hard
-
 "core-util-is@npm:~1.0.0":
   version: 1.0.3
   resolution: "core-util-is@npm:1.0.3"
@@ -6976,6 +6969,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.range@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "lodash.range@npm:3.2.0"
+  checksum: 9355140c0ae66c51e1828fe6b4aa64bfc986bcf3afeae720904cc89e0b15ec8d5e174454cbbf087485447e67e4b1d9000d7e53e89c7deea892d3c0b472461035
+  languageName: node
+  linkType: hard
+
 "lodash.slice@npm:^4.2.0":
   version: 4.2.0
   resolution: "lodash.slice@npm:4.2.0"
@@ -7001,6 +7001,13 @@ __metadata:
   version: 4.4.2
   resolution: "lodash.truncate@npm:4.4.2"
   checksum: b463d8a382cfb5f0e71c504dcb6f807a7bd379ff1ea216669aa42c52fc28c54e404bfbd96791aa09e6df0de2c1d7b8f1b7f4b1a61f324d38fe98bc535aeee4f5
+  languageName: node
+  linkType: hard
+
+"lodash.without@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.without@npm:4.4.0"
+  checksum: 8cef752edd4ed4065be2a8fd30ea52c0bb27b0cb6c34742f595263c72ee0c3a188572affb477ef18a4dd4d0347fe1a4e580b70d4e36f37323d7924d2e6046bd6
   languageName: node
   linkType: hard
 
@@ -7480,16 +7487,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment-timezone@npm:^0.5.34":
-  version: 0.5.34
-  resolution: "moment-timezone@npm:0.5.34"
-  dependencies:
-    moment: ">= 2.9.0"
-  checksum: 12a1d3d52e4ba509cf1fa36bbda59d898a08fa80ab35f6c358747e93aec1f07e617cec647eaf2e8acf5f9132e581d4704d34a9edffa9a80c5cd04bf23b277595
-  languageName: node
-  linkType: hard
-
-"moment@npm:>= 2.9.0, moment@npm:^2.17.1":
+"moment@npm:^2.17.1":
   version: 2.29.4
   resolution: "moment@npm:2.29.4"
   checksum: 0ec3f9c2bcba38dc2451b1daed5daded747f17610b92427bebe1d08d48d8b7bdd8d9197500b072d14e326dd0ccf3e326b9e3d07c5895d3d49e39b6803b76e80e
@@ -11253,13 +11251,11 @@ __metadata:
     "@types/styled-components": ^5.1.19
     "@typescript-eslint/eslint-plugin": ^5.13.0
     "@typescript-eslint/parser": ^5.13.0
-    axios: ^0.25.0
     babel-loader: ^8.2.3
     babel-plugin-styled-components: ^2.0.7
     bezier-easing: ^2.1.0
     brotli-webpack-plugin: ^1.1.0
     copy-webpack-plugin: ^10.2.0
-    core-js: ^3.21.1
     csstype: ^3.0.10
     eslint: ^8.10.0
     eslint-config-prettier: ^8.5.0
@@ -11275,11 +11271,12 @@ __metadata:
     http-proxy-agent: ^5.0.0
     http-simple-proxy: ^1.0.5
     lodash.difference: ^4.5.0
+    lodash.range: ^3.2.0
     lodash.slice: ^4.2.0
     lodash.sortby: ^4.7.0
     lodash.take: ^4.1.1
+    lodash.without: ^4.4.0
     moment-locales-webpack-plugin: ^1.2.0
-    moment-timezone: ^0.5.34
     nodemon: ^2.0.15
     npm-run-all: ^4.1.5
     pino-pretty: ^7.3.0

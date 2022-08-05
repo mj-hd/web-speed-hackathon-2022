@@ -112,7 +112,7 @@ module.exports = [
       IS_RELEASE && new BrotliPlugin({
         asset: '[path].br',
         minRatio: 0.8,
-        test: /\.(js|css|html|jpg|png)$/,
+        test: /\.(js|css|html|jpg|png|webp)$/,
         threshold: 10240
       }),
     ].filter(Boolean),

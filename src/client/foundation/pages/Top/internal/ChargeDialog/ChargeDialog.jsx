@@ -76,7 +76,8 @@ export const ChargeDialog = forwardRef(({ onComplete }, ref) => {
     if (!opened) return;
 
     (async () => {
-      const zenginCode = await import(/* webpackChunkName: "zengin" */ "zengin-code");
+      const response = await fetch('/api/zengin');
+      const zenginCode = await response.json();
 
       setZenginCode(zenginCode);
       setBankList(Object.entries(zenginCode).map(([code, { name }]) => ({

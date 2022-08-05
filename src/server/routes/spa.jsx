@@ -7,16 +7,18 @@ import fastifyStatic from "fastify-static";
  */
 export const spaRoute = async (fastify) => {
   fastify.register(fastifyStatic, {
+    maxAge: 604800,
     preCompressed: true,
     root: join(__dirname, "public"),
     wildcard: false
   });
 
-  fastify.get("/favicon.ico", () => {
+  fastify.get("/favicon.ico", (req, reply) => {
     throw fastify.httpErrors.notFound();
   });
 
   fastify.get("*", (req, reply) => {
+    reply.header('cache-control', 'max-age=604800');
     return reply.sendFile("index.html", join(__dirname, "public"));
   });
 };
