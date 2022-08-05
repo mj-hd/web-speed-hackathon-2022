@@ -20,7 +20,7 @@ const DIST_ROOT = abs("./dist");
 const DIST_PUBLIC = abs("./dist/public");
 
 const IS_ANALYZE = process.env.ANALYZE === 'true';
-const IS_RELEASE = process.env.RELEASE === 'true';
+const IS_RELEASE = process.env.NODE_ENV === 'production';
 
 /** @type {Array<import('webpack').Configuration>} */
 module.exports = [
@@ -29,7 +29,7 @@ module.exports = [
     entry: {
       main: path.join(SRC_ROOT, "client/index.jsx"),
     },
-    mode: "development",
+    mode: IS_RELEASE ? "production" : "development",
     module: {
       rules: [
         {
