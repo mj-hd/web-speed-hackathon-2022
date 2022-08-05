@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -8,7 +8,7 @@ import { Spacer } from "../../../components/layouts/Spacer";
 import { BigImage } from "../../../components/media/BigImage";
 import { TabNav } from "../../../components/navs/TabNav";
 import { Heading } from "../../../components/typographies/Heading";
-import { useAuthorizedFetch } from "../../../hooks/useAuthorizedFetch";
+import { useAuth } from "../../../contexts/AuthContext";
 import { useFetch } from "../../../hooks/useFetch";
 import { Color, Radius, Space } from "../../../styles/variables";
 import { formatTime } from "../../../utils/DateUtils";
@@ -29,11 +29,20 @@ const LiveBadge = styled.span`
 /** @type {React.VFC} */
 export const RaceResult = () => {
   const { raceId } = useParams();
-  const { data } = useFetch(`/api/races/${raceId}`, jsonFetcher);
-  const { data: ticketData } = useAuthorizedFetch(
-    `/api/races/${raceId}/betting-tickets`,
-    authorizedJsonFetcher,
-  );
+  const { data: data, loading } = useFetch(`/api/races/${raceId}`, jsonFetcher);
+  const [ticketData, setTicketData] = useState(null);
+
+  const { userId } = useAuth();
+
+  useEffect(() => {
+    if (loading) return;
+
+    const ticketData = authorizedJsonFetcher(
+      `/api/races/${raceId}/betting-tickets`,
+      userId,
+    );
+    setTicketData(ticketData);
+  }, [raceId, userId, loading]);
 
   return (
     <Container>
