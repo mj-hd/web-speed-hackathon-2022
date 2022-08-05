@@ -12,7 +12,6 @@ import { Heading } from "../../components/typographies/Heading";
 import { useAuthorizedFetch } from "../../hooks/useAuthorizedFetch";
 import { useFetch } from "../../hooks/useFetch";
 import { Color, Radius, Space } from "../../styles/variables";
-import { isSameDay } from "../../utils/DateUtils";
 import { authorizedJsonFetcher, jsonFetcher } from "../../utils/HttpUtils";
 import { assets } from "../../utils/UrlUtils";
 
@@ -111,7 +110,15 @@ export const Top = () => {
     authorizedJsonFetcher,
   );
 
-  const { data: raceData } = useFetch("/api/races", jsonFetcher);
+  const query = useMemo(() => {
+    const since = moment(date).startOf('day').unix();
+    const until = since + 86400;
+    return `since=${since}&until=${until}`;
+  }, [date]);
+
+  let { data: raceData } = useFetch(`/api/races?${query}`, jsonFetcher);
+
+  const todayRaces = raceData?.races ?? [];
 
   const handleClickChargeButton = useCallback(() => {
     if (chargeDialogRef.current === null) {
@@ -125,19 +132,6 @@ export const Top = () => {
     revalidate();
   }, [revalidate]);
 
-  const todayRaces =
-    useMemo(() => raceData != null
-      ? [...raceData.races]
-        .filter((/** @type {Model.Race} */ race) =>
-          isSameDay(race.startAt, date),
-        )
-        .sort(
-          (/** @type {Model.Race} */ a, /** @type {Model.Race} */ b) =>
-            moment(a.startAt) - moment(b.startAt),
-        )
-      : [],
-      [date, raceData],
-    );
   const todayRacesToShow = useTodayRacesWithAnimation(todayRaces);
   const heroImageUrl = useHeroImage(todayRaces);
 

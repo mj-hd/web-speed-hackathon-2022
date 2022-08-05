@@ -1,11 +1,18 @@
 import moment from "moment-timezone";
+import { cacheGet, cacheSet } from "../../../cache";
 /**
  * @param {string} dateLeft
  * @param {string} dateRight
  * @returns {boolean}
  */
 export const isSameDay = (dateLeft, dateRight) => {
-  return moment(dateLeft).isSame(moment(dateRight), "day");
+  const key = `isSameDay-${dateLeft}-${dateRight}`;
+  let result = cacheGet(key);
+  if (result == null) {
+    result = moment(dateLeft).isSame(moment(dateRight), "day");
+  }
+  cacheSet(key, result);
+  return result;
 };
 
 /**
@@ -14,8 +21,13 @@ export const isSameDay = (dateLeft, dateRight) => {
  * @returns {string}
  */
 export const formatTime = (ts) => {
-  // TODO: LRUでキャッシュできるかも
-  return moment(ts).format("H:mm");
+  const key = `formatTime-Hmm-${ts}`;
+  let result = cacheGet(key);
+  if (result == null) {
+    result = moment(ts).format("H:mm");
+  }
+  cacheSet(key, result);
+  return result;
 };
 
 /**

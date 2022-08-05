@@ -70,12 +70,15 @@ export const apiRoute = async (fastify) => {
       });
     } else if (until != null) {
       Object.assign(where, {
-        startAt: LessThanOrEqual(since.utc().format("YYYY-MM-DD HH:mm:ss")),
+        startAt: LessThanOrEqual(until.utc().format("YYYY-MM-DD HH:mm:ss")),
       });
     }
 
     const races = await repo.find({
-      where,
+      order: {
+        startAt: 'ASC',
+      },
+      where
     });
 
     res.send({ races });
@@ -84,7 +87,32 @@ export const apiRoute = async (fastify) => {
   fastify.get("/races/:raceId", async (req, res) => {
     const repo = conn.getRepository(Race);
 
-    // TODO: updatedAtがあればキャッシュしたかった…15sぐらいでキャッシュしても良いかもね
+    const race = await repo.findOne(req.params.raceId);
+
+    if (race === undefined) {
+      throw fastify.httpErrors.notFound();
+    }
+
+    res.send(race);
+  });
+
+  fastify.get("/races/:raceId/card", async (req, res) => {
+    const repo = conn.getRepository(Race);
+
+    const race = await repo.findOne(req.params.raceId, {
+      relations: ["entries", "entries.player"],
+    });
+
+    if (race === undefined) {
+      throw fastify.httpErrors.notFound();
+    }
+
+    res.send(race);
+  });
+
+  fastify.get("/races/:raceId/odds", async (req, res) => {
+    const repo = conn.getRepository(Race);
+
     const race = await repo.findOne(req.params.raceId, {
       relations: ["entries", "entries.player", "trifectaOdds"],
     });
