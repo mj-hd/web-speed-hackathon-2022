@@ -98,9 +98,16 @@ module.exports = [
     plugins: [
       IS_ANALYZE && new BundleAnalyzerPlugin(),
       new HtmlWebpackPlugin({
+        filename: 'index.html',
         publicPath: '/',
         scriptLoading: 'defer',
         template: path.join(SRC_ROOT, 'index.html'),
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'race.html',
+        publicPath: '/',
+        scriptLoading: 'defer',
+        template: path.join(SRC_ROOT, 'race.html'),
       }),
       new MomentLocalesPlugin({
         localesToKeep: ['ja'],

@@ -17,6 +17,11 @@ export const spaRoute = async (fastify) => {
     throw fastify.httpErrors.notFound();
   });
 
+  fastify.get("/races*", (req, reply) => {
+    reply.header('cache-control', 'max-age=604800');
+    return reply.sendFile("race.html", join(__dirname, "public"));
+  });
+
   fastify.get("*", (req, reply) => {
     reply.header('cache-control', 'max-age=604800');
     return reply.sendFile("index.html", join(__dirname, "public"));
