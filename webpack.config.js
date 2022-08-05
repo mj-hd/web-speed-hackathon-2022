@@ -61,34 +61,33 @@ module.exports = [
       minimizer: [new TerserPlugin()],
       splitChunks: {
         cacheGroups: {
-          default: false,
-          defaultVendors: false,
           framework: {
             chunks: 'all',
             enforce: true,
             name: 'framework',
-            priority: 40,
             test: /[\\/]node_modules[\\/](react|react-dom)/,
           },
-          lib: {
-            minChunks: 1,
-            name(module) {
-              const hash = crypto.createHash('sha1');
-              hash.update(module.libIdent({ context: __dirname }));
-              return hash.digest('hex').substring(0, 8);
-            },
-            priority: 30,
-            reuseExistingChunk: true,
+          lodash: {
+            chunks: 'all',
+            enforce: true,
+            name: 'lodash',
             test(module) {
               return (
-                module.size() > 160000 &&
-                /node_modules[/\\]/.test(module.nameForCondition() || '')
+                /node_modules[/\\]lodash.*/.test(module.nameForCondition())
+              );
+            },
+          },
+          moment: {
+            chunks: 'all',
+            enforce: true,
+            name: 'moment',
+            test(module) {
+              return (
+                /node_modules[/\\]moment.*/.test(module.nameForCondition())
               );
             },
           },
         },
-        maxInitialRequests: 25,
-        minSize: 20000,
       },
     },
     output: {

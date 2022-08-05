@@ -56,7 +56,7 @@ export function useMutation(apiPath, { auth, method }) {
           method,
         });
 
-        const val = res.json();
+        const val = await res.json();
 
         setResult((cur) => ({
           ...cur,
