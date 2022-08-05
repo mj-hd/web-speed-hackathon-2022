@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -43,9 +43,20 @@ const Callout = styled.aside`
 /** @type {React.VFC} */
 export const Odds = () => {
   const { raceId } = useParams();
-  const { data } = useFetch(`/api/races/${raceId}/odds`, jsonFetcher);
+  const { data: race, loading: isLoading } = useFetch(`/api/races/${raceId}`, jsonFetcher);
   const [oddsKeyToBuy, setOddsKeyToBuy] = useState(null);
+  const [raceWithOdds, setRaceWithOdds] = useState(null);
   const modalRef = useRef(null);
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    (async () => {
+      const raceWithOdds = await jsonFetcher(`/api/races/${raceId}/odds`);
+
+      setRaceWithOdds(raceWithOdds);
+    })();
+  }, [raceId, isLoading]);
 
   const handleClickOdds = useCallback(
     /**
@@ -59,14 +70,14 @@ export const Odds = () => {
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const isRaceClosed = useMemo(() => data != null ? moment(data.closeAt).isBefore(new Date()) : null, [data?.closeAt]);
+  const isRaceClosed = useMemo(() => race != null ? moment(race.closeAt).isBefore(new Date()) : null, [race?.closeAt]);
 
   return (
     <Container>
       <Spacer mt={Space * 2} />
-      <Heading as="h1">{data?.name ?? '-'}</Heading>
+      <Heading as="h1">{race?.name ?? '-'}</Heading>
       <p>
-        開始 {data != null ? formatTime(data.startAt) : '-'} 締切 {data != null ? formatTime(data.closeAt) : '-'}
+        開始 {race != null ? formatTime(race.startAt) : '-'} 締切 {race != null ? formatTime(race.closeAt) : '-'}
       </p>
 
       <Spacer mt={Space * 2} />
@@ -74,7 +85,7 @@ export const Odds = () => {
       <Section dark shrink>
         <LiveBadge>Live</LiveBadge>
         <Spacer mt={Space * 2} />
-        <BigImage src={data?.image} />
+        <BigImage src={race?.image} />
       </Section>
 
       <Spacer mt={Space * 2} />
@@ -90,7 +101,7 @@ export const Odds = () => {
 
         <Spacer mt={Space * 4} />
 
-        {data != null && (
+        {race != null && (
           <Callout $closed={isRaceClosed}>
             <SvgIcon aria-hidden="true" focusable="false" role="img" viewBox="0 0 512 512" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z" fill="currentColor"></path></SvgIcon>
             {isRaceClosed
@@ -103,11 +114,11 @@ export const Odds = () => {
         <Heading as="h2">オッズ表</Heading>
 
         <Spacer mt={Space * 2} />
-        {data != null && (
+        {raceWithOdds != null && (
           <OddsTable
-            entries={data.entries}
+            entries={raceWithOdds.entries}
             isRaceClosed={isRaceClosed}
-            odds={data.trifectaOdds}
+            odds={raceWithOdds.trifectaOdds}
             onClickOdds={handleClickOdds}
           />
         )}
@@ -116,10 +127,10 @@ export const Odds = () => {
         <Heading as="h2">人気順</Heading>
 
         <Spacer mt={Space * 2} />
-        {data != null && (
+        {raceWithOdds != null && (
           <OddsRankingList
             isRaceClosed={isRaceClosed}
-            odds={data.trifectaOdds}
+            odds={raceWithOdds.trifectaOdds}
             onClickOdds={handleClickOdds}
           />
         )}
