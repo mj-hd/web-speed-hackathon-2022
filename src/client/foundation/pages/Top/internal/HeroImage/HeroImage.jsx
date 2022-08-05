@@ -1,17 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-const WIDTH = 1024;
-const HEIGHT = 734;
-
-const Placeholder = styled.div`
-  width: ${WIDTH}px;
-  height: ${HEIGHT}px;
+const Wrapper = styled.div`
+  position: relative;
+  width: 100%;
+  padding-bottom: calc((1033 / 1440) * 100%);
 `;
 
 const Image = styled.img`
-  display: block;
-  margin: 0 auto;
+  position: absolute;
 `;
 
 /**
@@ -22,8 +19,5 @@ const Image = styled.img`
 
 /** @type {React.VFC<Props>} */
 export const HeroImage = ({ url }) => {
-  if (url == null) {
-    return <Placeholder />
-  }
-  return <Image alt="" height={HEIGHT} src={url} width={WIDTH} />;
+  return <Wrapper>{url != null && <Image alt="" src={url} />}</Wrapper>;
 };
