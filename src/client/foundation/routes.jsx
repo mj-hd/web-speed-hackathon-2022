@@ -2,10 +2,14 @@ import React, { Suspense } from "react";
 import { Route, Routes as RouterRoutes } from "react-router-dom";
 
 import { CommonLayout } from "./layouts/CommonLayout";
-const Top = React.lazy(() => import(/* webpackChunkName: "top", webpackPrefetch: true */ "./pages/Top"));
-const Odds = React.lazy(() => import(/* webpackChunkName: "odds", webpackPrefetch: true */ "./pages/races/Odds"));
-const RaceCard = React.lazy(() => import(/* webpackChunkName: "raceCard", webpackPrefetch: true */ "./pages/races/RaceCard"));
-const RaceResult = React.lazy(() => import(/* webpackChunkName: "raceResult", webpackPrefetch: true */ "./pages/races/RaceResult"));
+//const Top = React.lazy(() => import(/* webpackChunkName: "top", webpackPrefetch: true */ "./pages/Top"));
+//const Odds = React.lazy(() => import(/* webpackChunkName: "odds", webpackPrefetch: true */ "./pages/races/Odds"));
+//const RaceCard = React.lazy(() => import(/* webpackChunkName: "raceCard", webpackPrefetch: true */ "./pages/races/RaceCard"));
+//const RaceResult = React.lazy(() => import(/* webpackChunkName: "raceResult", webpackPrefetch: true */ "./pages/races/RaceResult"));
+import Top from "./pages/Top";
+import Odds from "./pages/races/Odds";
+import RaceCard from "./pages/races/RaceCard";
+import RaceResult from "./pages/races/RaceResult";
 
 /** @type {React.VFC} */
 export const Routes = () => {
