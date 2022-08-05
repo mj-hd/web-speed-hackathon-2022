@@ -5,6 +5,11 @@ import { Stack } from "../../../../../components/layouts/Stack";
 import { SmallImage } from "../../../../../components/media/SmallImage";
 import { Color, FontSize, Space } from "../../../../../styles/variables";
 
+// NOTE: 想定する最低の高さだけ保持してCLSを軽減
+const Wrapper = styled.div`
+  min-height: 140px;
+`;
+
 const PlayerNumber = styled.span`
   border: 1px solid ${Color.mono[900]};
   font-weight: bold;
@@ -45,9 +50,11 @@ const Item = ({ image, name, number }) => {
 
 export const PlayerPictureList = ({ children }) => {
   return (
-    <Stack horizontal gap={Space * 2} wrap="wrap">
-      {children}
-    </Stack>
+    <Wrapper>
+      <Stack horizontal gap={Space * 2} wrap="wrap">
+        {children}
+      </Stack>
+    </Wrapper>
   );
 };
 PlayerPictureList.Item = Item;

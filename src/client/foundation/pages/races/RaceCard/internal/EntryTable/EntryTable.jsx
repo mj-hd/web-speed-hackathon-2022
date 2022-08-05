@@ -105,7 +105,7 @@ export const EntryTable = ({ entries }) => {
           </tr>
         </thead>
         <tbody>
-          {entries.map((entry) => (
+          {entries?.map((entry) => (
             <tr key={entry.id}>
               <TableCell>{entry.number}</TableCell>
               <TableCell $bold $align="left">

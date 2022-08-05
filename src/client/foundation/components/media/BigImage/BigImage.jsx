@@ -1,6 +1,15 @@
 import React from "react";
+import styled from "styled-components";
 
 import { baseName } from "../../../utils/UrlUtils";
+
+const WIDTH = 400;
+const HEIGHT = 225;
+
+const Placeholder = styled.div`
+  width: ${WIDTH}px;
+  height: ${HEIGHT}px;
+`;
 
 /**
  * @typedef Props
@@ -9,5 +18,6 @@ import { baseName } from "../../../utils/UrlUtils";
 
 /** @type {React.VFC<Props>} */
 export const BigImage = ({ src, ...attrs }) => {
-  return <img {...attrs} height="225" src={`${baseName(src)}.big.webp`} width="400" />;
+  if (src == null) return <Placeholder />;
+  return <img {...attrs} height={HEIGHT} src={`${baseName(src)}.big.webp`} width={WIDTH} />;
 }

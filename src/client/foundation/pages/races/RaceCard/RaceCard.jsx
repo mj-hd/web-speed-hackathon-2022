@@ -30,16 +30,12 @@ export const RaceCard = () => {
   const { raceId } = useParams();
   const { data } = useFetch(`/api/races/${raceId}`, jsonFetcher);
 
-  if (data == null) {
-    return <Container>Loading...</Container>;
-  }
-
   return (
     <Container>
       <Spacer mt={Space * 2} />
-      <Heading as="h1">{data.name}</Heading>
+      <Heading as="h1">{data?.name ?? '-'}</Heading>
       <p>
-        開始 {formatTime(data.startAt)} 締切 {formatTime(data.closeAt)}
+        開始 {data != null ? formatTime(data.startAt) : '-'} 締切 {data != null ? formatTime(data.closeAt) : '-'}
       </p>
 
       <Spacer mt={Space * 2} />
@@ -47,7 +43,7 @@ export const RaceCard = () => {
       <Section dark shrink>
         <LiveBadge>Live</LiveBadge>
         <Spacer mt={Space * 2} />
-        <BigImage src={data.image} />
+        <BigImage src={data?.image} />
       </Section>
 
       <Spacer mt={Space * 2} />
@@ -63,7 +59,7 @@ export const RaceCard = () => {
 
         <Spacer mt={Space * 2} />
         <PlayerPictureList>
-          {data.entries.map((entry) => (
+          {data?.entries.map((entry) => (
             <PlayerPictureList.Item
               key={entry.id}
               image={entry.player.image}
@@ -74,7 +70,7 @@ export const RaceCard = () => {
         </PlayerPictureList>
 
         <Spacer mt={Space * 4} />
-        <EntryTable entries={data.entries} />
+        <EntryTable entries={data?.entries} />
       </Section>
     </Container>
   );

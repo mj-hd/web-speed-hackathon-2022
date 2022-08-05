@@ -35,16 +35,12 @@ export const RaceResult = () => {
     authorizedJsonFetcher,
   );
 
-  if (data == null) {
-    return <Container>Loading...</Container>;
-  }
-
   return (
     <Container>
       <Spacer mt={Space * 2} />
-      <Heading as="h1">{data.name}</Heading>
+      <Heading as="h1">{data?.name ?? '-'}</Heading>
       <p>
-        開始 {formatTime(data.startAt)} 締切 {formatTime(data.closeAt)}
+        開始 {data != null ? formatTime(data.startAt) : '-'} 締切 {data != null ? formatTime(data.closeAt) : '-'}
       </p>
 
       <Spacer mt={Space * 2} />
@@ -52,7 +48,7 @@ export const RaceResult = () => {
       <Section dark shrink>
         <LiveBadge>Live</LiveBadge>
         <Spacer mt={Space * 2} />
-        <BigImage src={data.image} />
+        <BigImage src={data?.image} />
       </Section>
 
       <Spacer mt={Space * 2} />
